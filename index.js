@@ -1,17 +1,13 @@
+'use strict'
 const Task = require('data.task')
 const Spotify = require('./spotify')
 const {List} = require('immutable-ext')
 const {Pair, Sum} = require('./monoid')
+const Intersection = require('./monoids/intersection')
 
 const argv = new Task((rej, res) => res(process.argv))
 const names = argv.map(args => args.slice(2))
 
-const Intersection = xs =>
-({
-  xs,
-  concat: ({xs: ys}) =>
-    Intersection(xs.filter(x => ys.some(y => x === y)))
-})
 
 const related = name =>
   Spotify.findArtist(name)
